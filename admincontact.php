@@ -9,7 +9,7 @@ if (isset($_POST['delete'])) {
     $contact_id = $_POST['contact_id'];
 
     require_once('db.database.php');
-    // Prepare and execute the SQL query to delete the entry
+
     $query = "DELETE FROM `contact_info` WHERE `contact_id` = :contact_id";
     $pdoresult = $conn->prepare($query);
     $pdoExec = $pdoresult->execute(array(":contact_id" => $contact_id));
