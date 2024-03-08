@@ -1,0 +1,45 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.col-md-4 {
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+.person-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 100%;
+}
+
+.person-info img {
+    max-width: 100%;
+    height: auto;
+}
+
+.person-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.prijzen {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.informatie {
+    margin-top: auto;
+}
+
+.add-to-cart {
+    margin-top: auto;
+}
+
