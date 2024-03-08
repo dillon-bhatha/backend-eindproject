@@ -19,6 +19,7 @@ if (isset($_POST['add'])) {
 
     $pdoresult = $pdoconnect->prepare($query);
     //test
+    //test
 
     $pdoExec = $pdoresult->execute(array(
         ":name" => $name,
