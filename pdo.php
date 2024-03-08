@@ -15,11 +15,8 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-<<<<<<< HEAD
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-=======
             <div class="collapse navbar-collapse justify-content-between" id="navbarNav"> <!-- Changed justify-content -->
->>>>>>> 2d143c0435f173f3415bdb3e2d0af2a6d3c19e63
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="home.php">Home</a>
