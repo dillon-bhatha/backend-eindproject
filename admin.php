@@ -18,6 +18,7 @@ if (isset($_POST['add'])) {
         VALUES (:name, :prijs, :info, :foto)";
 
     $pdoresult = $pdoconnect->prepare($query);
+    //test
 
     $pdoExec = $pdoresult->execute(array(
         ":name" => $name,
