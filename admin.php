@@ -81,16 +81,19 @@ if (isset($_POST['edit'])) {
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-between" id="navbarNav"> <!-- Changed justify-content -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="user.php">Home</a>
-                    </li>
-                    <li class="nav-item is-active">
-                        <a class="nav-link" href="userproducten.php">Producten</a>
+                        <a class="nav-link" href="adminhome.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="adminproducten.php">Producten</a>
+                    </li>
+                    <li class="nav-item is-active">
+                        <a class="nav-link" href="admin.php">Admin Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admincontact.php">Contact</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">

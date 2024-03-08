@@ -1,33 +1,38 @@
+<?php
+session_start();
+if(!isset($_SESSION["username"])) {
+    header("location:home.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
-
-  <!-- Navbar -->
-  <header>
+<header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="home.php" style="font-size: 24px;">WEBSHOP</a>
+            <a class="navbar-brand" href="user.php" style="font-size: 24px;">WEBSHOP</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-between" id="navbarNav"> <!-- Changed justify-content -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="home.php">Home</a>
-                    </li>
-                    <li class="nav-item is-active">
-                        <a class="nav-link" href="pdo.php">Producten</a>
+                        <a class="nav-link" href="adminhome.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
+                        <a class="nav-link" href="adminproducten.php">Producten</a>
+                    </li>
+                    <li class="nav-item is-active">
+                        <a class="nav-link" href="admin.php">Admin Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admincontact.php">Contact</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -39,12 +44,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="login.php">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                    </svg>
-                        </a>
+                        <a class="nav-link" href="logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -52,40 +52,43 @@
     </nav>
 </header>
 
-  <!-- Contact Form Section -->
-  <section id="contact" class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 mx-auto">
-          <div class="card">
-            <div class="card-header">
-              <h4>Contact Us</h4>
-            </div>
-            <div class="card-body">
-              <form method="post" action="process_contact.php">
-                <div class="form-group">
-                  <label for="name">Your Name</label>
-                  <input type="text" id="name" name="name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Your Email</label>
-                  <input type="email" id="email" name="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label for="message">Message</label>
-                  <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<main class="container mt-3">
+    <div class="row">
+        <?php
+        require_once('db.database.php');
 
-  <!-- Footer -->
-  <footer class="bg-light">
+        $query = "SELECT * FROM producten";
+
+        $stmt = $conn->query($query);
+
+        if ($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<div class='col-md-4'>";
+                echo "<div class='person-info'>";
+                echo "<div class= 'titel'><h3><strong>{$row['name']}</strong></h3></div>";
+                if (!empty($row["foto"])) {
+                    echo "<a href='" . $row["foto"] . "' target='_blank'>";
+                    echo "<img src='" . $row["foto"] . "' alt='Person foto' class='img-fluid'>";
+                    echo "</a>";
+                } else {
+                    echo "No foto available";
+                }
+                echo "<div class='person-details'>";
+                echo "<h2 class='prijzen'>$<strong>{$row['prijs']}</strong></h2>";
+                echo "<div class= 'informatie'>{$row['info']}</div>";
+                echo "</div>";
+                echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-2 detail-btn'>Details</a>";
+                echo "<button class='btn btn-primary mt-2 add-to-cart' data-product-id='{$row['product_id']}'>Add to Cart</button>";
+                echo "</div>";
+                echo "</div>";
+            }
+        } else {
+            echo "No results found.";
+        }
+        ?>
+    </div>
+</main>
+<footer class="bg-light">
     <div class="container p-4">
         <div class="row">
             <div class="col-lg-6 col-md-12 mb-4">
@@ -134,9 +137,25 @@
     </div>
 </footer>
 
-  <!-- Bootstrap JS and dependencies -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = button.getAttribute('data-product-id');
+
+                addToCart(productId);
+            });
+        });
+
+        function addToCart(productId) {
+            console.log('Product added to cart with ID: ' + productId);
+        }
+    });
+</script>
 </body>
 </html>
