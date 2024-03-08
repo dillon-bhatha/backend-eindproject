@@ -25,7 +25,7 @@
                         <a class="nav-link" href="userproducten.php">Producten</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="usercontact.php">Contact</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
