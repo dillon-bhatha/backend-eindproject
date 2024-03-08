@@ -32,34 +32,45 @@ if (!isset($_SESSION["username"])) {
     th {
         background-color: #f2f2f2;
     }
+
+    .contact {
+        width: 1000px;
+        margin-top: 20px;
+    }
+
+    .contactin {
+        width: 200px;
+    }
     </style>
 </head>
 
 <body>
-    <header>
+<header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="home.php" style="font-size: 24px;">WEBSHOP</a>
+                <a class="navbar-brand" href="adminhome.php" style="font-size: 24px;">WEBSHOP</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <!-- Changed justify-content -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="home.php">Home</a>
-                        </li>
-                        <li class="nav-item is-active">
-                            <a class="nav-link" href="pdo.php">Producten</a>
+                            <a class="nav-link" href="adminhome.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.php">Contact</a>
+                            <a class="nav-link" href="adminproducten.php">Producten</a>
+                        </li>
+                        <li class="nav-item is-active">
+                            <a class="nav-link" href="admin.php">Admin Page</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admincontact.php">Contact</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="cart.php">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                                     class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
                                     <path
@@ -68,14 +79,7 @@ if (!isset($_SESSION["username"])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
-                                    class="bi bi-person-circle" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                    <path fill-rule="evenodd"
-                                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                                </svg>
-                            </a>
+                            <a class="nav-link" href="logout.php">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -84,26 +88,22 @@ if (!isset($_SESSION["username"])) {
     </header>
     <?php
     require_once('db.database.php');
+    $query = "SELECT * FROM contact_info";
 
-    if (isset($_GET["contact_id"])) {
-        $contact_id = $_GET["contact_id"];
-        $stmt = $conn->prepare("SELECT * FROM contact_info WHERE contact_id = ?");
-        $stmt->execute([$contact_id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->query($query);
 
-        if ($stmt->rowCount() > 0) {
-            echo "<h1>{$row["User"]}</h1>";
-            echo "<table>";
-            echo "<tr><th>Attribute</th><th>Value</th></tr>";
-            echo "<tr><td>Username</td><td>" . $row["username"] . "</td></tr>";
-            echo "<tr><td>E-mail</td><td>" . $row["email"] . "</td></tr>";
-            echo "<tr><td>Comments</td><td>" . $row["text"] . "</td></tr>";
-            echo "</table>";
-        } else {
-            echo "<p>No records found.</p>";
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<div>";
+                echo "<table class = 'contact'>";
+                    echo "<tr><td class = 'contactin'>Username</td><td>" . $row["username"] . "</td></tr>";
+                    echo "<tr><td>E-mail</td><td>" . $row["email"] . "</td></tr>";
+                    echo "<tr><td>Beschrijving</td><td>" . $row["text"] . "</td></tr>";
+                echo "</table>";
+            echo "</div>";
         }
     } else {
-        echo "<p>No contact ID provided.</p>";
+        echo "No results found.";
     }
     ?>
     <footer class="bg-light">

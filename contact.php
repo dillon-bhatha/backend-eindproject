@@ -1,3 +1,34 @@
+<?php
+
+if (isset($_POST['add'])) {
+    require_once('db.database.php');
+    $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+    $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $username = $_POST['username'];
+    $email =$_POST['email'];
+    $text = $_POST['text'];
+
+    $query = "INSERT INTO `contact_info` (`username`, `email`, `info`, `text`)
+        VALUES (:username, :email, :info, :text)";
+
+    $pdoresult = $pdoconnect->prepare($query);
+
+    $pdoExec = $pdoresult->execute(array(
+        ":username" => $username,
+        ":email" => $email,
+        ":info" => $info,
+        ":text" => $text,
+    ));
+
+    if ($pdoExec) {
+        echo "Data Inserted";
+    } else {
+        echo "ERROR";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +40,6 @@
 </head>
 
 <body>
-
-  <!-- Navbar -->
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -51,7 +80,6 @@
         </div>
     </nav>
 </header>
-
   <!-- Contact Form Section -->
   <section id="contact" class="py-5">
     <div class="container">
@@ -62,10 +90,10 @@
               <h4>Contact Us</h4>
             </div>
             <div class="card-body">
-              <form method="post" action="process_contact.php">
+              <form method="post" action="contact.php">
                 <div class="form-group">
                   <label for="name">Your Name</label>
-                  <input type="text" id="name" name="name" class="form-control" required>
+                  <input type="text" id="name" name="username" class="form-control" required>
                 </div>
                 <div class="form-group">
                   <label for="email">Your Email</label>
@@ -73,7 +101,7 @@
                 </div>
                 <div class="form-group">
                   <label for="message">Message</label>
-                  <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                  <textarea id="message" name="text" class="form-control" rows="5" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Send Message</button>
               </form>
@@ -133,7 +161,6 @@
         <a class="text-dark" href="#">WEBSHOP</a>
     </div>
 </footer>
-
   <!-- Bootstrap JS and dependencies -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
