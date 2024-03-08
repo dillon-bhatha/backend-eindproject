@@ -32,6 +32,38 @@ if (isset($_POST['add'])) {
         echo "ERROR";
     }
 }
+
+if (isset($_POST['edit'])) {
+    require_once('db.database.php');
+    $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+    $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $product_id = $_POST['editproduct_id'];
+    $name = $_POST['editname'];
+    $prijs = (float)$_POST['editprijs'];
+    $info = $_POST['editinfo'];
+    $foto = $_POST['editfoto'];
+
+    $query = "UPDATE `producten` SET `name`=:editname, `prijs`=:editprijs, `info`=:editinfo,
+    `foto`=:editfoto WHERE `product_id` = :product_id";
+
+    $pdoresult = $pdoconnect->prepare($query);
+
+    $pdoExec = $pdoresult->execute(array(
+        ":product_id" => $product_id,
+        ":editname" => $name,
+        ":editprijs" => $prijs,
+        ":editinfo" => $info,
+        ":editfoto" => $foto,
+    ));
+
+    if ($pdoExec) {
+        echo "Data Inserted";
+    } else {
+        echo "ERROR";
+    }
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,6 +118,29 @@ if (isset($_POST['add'])) {
         <input type="text" name="info" required placeholder="Information"><br><br>  
         <input type="text" id="image" name="foto" required placeholder="image"><br><br>
         <input type="submit" name="add" value="Add"><br><br>
+    </form>
+    <h1>Edit</h1>
+    <br>
+    <form action="" method="post">
+        <select name="editproduct_id" required>
+            <?php
+            require_once('db.database.php');
+            $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+            $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $query = "SELECT `product_id`, `name` FROM `producten`";
+            $stmt = $pdoconnect->query($query);
+            
+            while ($row = $stmt->fetch()) {
+                echo "<option value='" . $row['product_id'] . "'>" . $row['name'] . "</option>";
+            }
+            ?>
+        </select><br><br>
+        <input type="text" name="editname" required placeholder="Name"><br><br>
+        <input type="text" name="editprijs" required placeholder="Price"><br><br>
+        <input type="text" name="editinfo" required placeholder="Information"><br><br>  
+        <input type="text" id="editimage" name="editfoto" required placeholder="image"><br><br>
+        <input type="submit" name="edit" value="Edit"><br><br>
     </form>
 </main>
 <footer class="bg-light">
