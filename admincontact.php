@@ -114,7 +114,6 @@ if (isset($_POST['delete'])) {
             echo "<tr><td>Beschrijving</td><td>" . $row["text"] . "</td></tr>";
             echo "</table>";
 
-            // Add a delete button for each entry
             echo "<form method='post' action=''>";
             echo "<input type='hidden' name='contact_id' value='" . $row['contact_id'] . "'>";
             echo "<button type='submit' name='delete' class='btn btn-danger'>Delete</button>";
