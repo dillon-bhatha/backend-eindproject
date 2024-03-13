@@ -27,9 +27,9 @@ if (isset($_POST['add'])) {
     ));
 
     if ($pdoExec) {
-        echo "Data Inserted";
+        echo "<div class='alert alert-success'>Data Inserted</div>";
     } else {
-        echo "ERROR";
+        echo "<div class='alert alert-danger'>ERROR</div>";
     }
 }
 
@@ -58,9 +58,9 @@ if (isset($_POST['edit'])) {
     ));
 
     if ($pdoExec) {
-        echo "Data Inserted";
+        echo "<div class='alert alert-success'>Data Updated</div>";
     } else {
-        echo "ERROR";
+        echo "<div class='alert alert-danger'>ERROR</div>";
     }
 }
 ?>
@@ -70,7 +70,7 @@ if (isset($_POST['edit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
@@ -113,38 +113,55 @@ if (isset($_POST['edit'])) {
             </div>
         </nav>
     </header>
-    <main>
-        <h1>Add</h1>
-        <br>
+    <main class="container mt-5">
+        <h1>Add Product</h1>
         <form action="" method="post">
-            <input type="text" name="name" required placeholder="Name"><br><br>
-            <input type="text" name="prijs" required placeholder="Price"><br><br>
-            <input type="text" name="info" required placeholder="Information"><br><br>
-            <input type="text" id="image" name="foto" required placeholder="image"><br><br>
-            <input type="submit" name="add" value="Add"><br><br>
+            <div class="form-group">
+                <input type="text" class="form-control" name="name" required placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input type="number" step="0.01" class="form-control" name="prijs" required placeholder="Price">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" name="info" rows="3" required placeholder="Information"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="foto" required placeholder="Image URL">
+            </div>
+            <button type="submit" name="add" class="btn btn-primary">Add</button>
         </form>
-        <h1>Edit</h1>
-        <br>
+        <hr>
+        <h1>Edit Product</h1>
         <form action="" method="post">
-            <select name="editproduct_id" required>
-                <?php
-                require_once('db.database.php');
-                $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-                $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            <div class="form-group">
+                <select class="form-control" name="editproduct_id" required>
+                    <?php
+                    require_once('db.database.php');
+                    $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+                    $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                $query = "SELECT `product_id`, `name` FROM `producten`";
-                $stmt = $pdoconnect->query($query);
+                    $query = "SELECT `product_id`, `name` FROM `producten`";
+                    $stmt = $pdoconnect->query($query);
 
-                while ($row = $stmt->fetch()) {
-                    echo "<option value='" . $row['product_id'] . "'>" . $row['name'] . "</option>";
-                }
-                ?>
-            </select><br><br>
-            <input type="text" name="editname" required placeholder="Name"><br><br>
-            <input type="text" name="editprijs" required placeholder="Price"><br><br>
-            <input type="text" name="editinfo" required placeholder="Information"><br><br>
-            <input type="text" id="editimage" name="editfoto" required placeholder="image"><br><br>
-            <input type="submit" name="edit" value="Edit"><br><br>
+                    while ($row = $stmt->fetch()) {
+                        echo "<option value='" . $row['product_id'] . "'>" . $row['name'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="editname" required placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input type="number" step="0.01" class="form-control" name="editprijs" required placeholder="Price">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" name="editinfo" rows="3" required placeholder="Information"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="editfoto" required placeholder="Image URL">
+            </div>
+            <button type="submit" name="edit" class="btn btn-primary">Edit</button>
         </form>
     </main>
     <footer class="bg-light">
@@ -195,9 +212,9 @@ if (isset($_POST['edit'])) {
             <a class="text-dark" href="#">WEBSHOP</a>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>

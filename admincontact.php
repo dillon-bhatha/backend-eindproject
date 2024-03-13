@@ -15,9 +15,9 @@ if (isset($_POST['delete'])) {
     $pdoExec = $pdoresult->execute(array(":contact_id" => $contact_id));
 
     if ($pdoExec) {
-        echo "Data Deleted";
+        echo "<div class='alert alert-success'>Data Deleted</div>";
     } else {
-        echo "ERROR";
+        echo "<div class='alert alert-danger'>ERROR</div>";
     }
 }
 ?>
