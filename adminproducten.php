@@ -41,6 +41,10 @@ if (isset($_POST['delete'])) {
             margin-top: 7px;
             border-style: none;
         }
+
+        .deleto:hover {
+            filter: brightness(85%);
+        }
     </style>
 </head>
 
