@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+require_once('db.database.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,32 +76,34 @@ session_start();
     </section>
 
     <section class="products py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Featured Products</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="product1.jpg" class="card-img-top" alt="Product 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Description of the product. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="product2.jpg" class="card-img-top" alt="Product 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Description of the product. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Products</h2>
+        <div class="row">
+            <?php
+            require_once('db.database.php');
+            $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+            $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $query = "SELECT `name`, `info`, `foto`, `product_id` FROM `producten`";
+            $stmt = $pdoconnect->query($query);
+
+            while ($row = $stmt->fetch()) {
+                echo '<div class="col-md-4 mb-2">';
+                echo '<div class="card">';
+                echo '<img src="' . $row['foto'] . '" class="card-img-top" alt="' . $row['name'] . '">';
+                echo '<div class="card-body">';
+                echo '<h5 class="card-title">' . $row['name'] . '</h5>';
+                echo '<p class="card-text">' . $row['info'] . '</p>';
+                echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-3 detail-btn'>Details</a>";
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <footer class="bg-light">
     <div class="container p-4">
