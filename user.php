@@ -106,7 +106,6 @@ if (!isset($_SESSION["username"])) {
                         </div>
                     </div>
                 </div>
-                <!-- Voeg meer productkaarten toe indien nodig -->
             </div>
         </div>
     </section>
