@@ -3,6 +3,23 @@ session_start();
 if (!isset($_SESSION["username"])) {
     header("location:home.php");
 }
+
+if (isset($_POST['delete'])) {
+    $product_id = $_POST['product_id'];
+
+    require_once('db.database.php');
+
+    $query = "DELETE FROM `producten` WHERE `product_id` = :product_id";
+    $pdoresult = $conn->prepare($query);
+    $pdoExec = $pdoresult->execute(array(":product_id" => $product_id));
+
+    if ($pdoExec) {
+        echo "Data Deleted";
+    } else {
+        echo "ERROR";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +30,18 @@ if (!isset($_SESSION["username"])) {
     <title>Document</title>
     <link rel="stylesheet" href="../pdo/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .deleto {
+            width: 330px;
+            background-color: red;
+            border-radius: 5px;
+            height: 40px;
+            color: white;
+            box-shadow: #4f4f4f;
+            margin-top: 7px;
+            border-style: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -82,6 +111,10 @@ if (!isset($_SESSION["username"])) {
                     echo "</div>";
                     echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-2 detail-btn'>Details</a>";
                     echo "<button class='btn btn-primary mt-2 add-to-cart' data-product-id='{$row['product_id']}'>Add to Cart</button>";
+                    echo "<form method='post' action=''>";
+                    echo "<input type='hidden' name='product_id' value='" . $row['product_id'] . "'>";
+                    echo "<button class ='deleto' type='submit' name='delete' class='btn btn-danger mt-2'>Delete</button>";
+                    echo "</form>";
                     echo "</div>";
                     echo "</div>";
                 }
