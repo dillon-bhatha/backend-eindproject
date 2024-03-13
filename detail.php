@@ -8,25 +8,38 @@
     <style>
         h1 {
             text-align: center;
-        }
-
-        table {
-            margin: auto;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
         img.img-fluid {
-             width: 300px;
-             margin-top: 20px;
+            max-width: 380px;
+            display: block;
+        }
+
+        .product-info {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            margin-top: 30px;
+        }
+
+        .product-info h3 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        .product-info p {
+            color: #666;
+        }
+
+        .add-to-cart {
+            margin-top: 20px;
+        }
+
+        .layer {
+            margin: 30px;
         }
     </style>
 </head>
@@ -82,17 +95,30 @@ if(isset($_GET["product_id"])) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($stmt->rowCount() > 0) {
-        echo "<h1>{$row["name"]}</h1>";
-        echo "<table>";
-        echo "<tr><th>Attribute</th><th>Value</th></tr>";
-        echo "<div = foto><tr><td><img src='" . $row["foto"] . "' alt='Person foto' class='img-fluid'><td>" . $row["info"] . "</td></tr></div>";
-        echo "<tr><td>Prijs</td><td>" . $row["prijs"] . "</td></tr>";
-        echo "</table>";
+?>
+        <h1><?php echo $row["name"];?></h1>
+        <div class="layer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="<?php echo $row["foto"]; ?>" alt="Person foto" class="img-fluid">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-info">
+                            <h3><?php echo "$" . $row["prijs"];?></h3>
+                            <p><?php echo $row["info"];?></p>
+                            <button class='btn btn-primary add-to-cart' data-product-id='<?php echo $row['product_id']; ?>'>Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<?php
     } else {
-        echo "<p>No records found.</p>";
+        echo "<p>Geen records gevonden.</p>";
     }
 } else {
-    echo "<p>No product ID provided.</p>";
+    echo "<p>Geen product-ID opgegeven.</p>";
 }
 ?>
 <footer class="bg-light">
@@ -101,7 +127,9 @@ if(isset($_GET["product_id"])) {
             <div class="col-lg-6 col-md-12 mb-4">
                 <h5 class="mb-3 text-dark">About Us:</h5>
                 <p>
-                Our webshop is characterized by an extensive product catalog, where customers can browse through the latest and most popular electronics. Each product is presented with detailed specifications, images, and user reviews, enabling customers to make well-informed decisions.
+                    Our webshop is characterized by an extensive product catalog, where customers can browse through
+                    the latest and most popular electronics. Each product is presented with detailed specifications,
+                    images, and user reviews, enabling customers to make well-informed decisions.
                 </p>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
