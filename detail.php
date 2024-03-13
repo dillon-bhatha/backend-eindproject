@@ -23,6 +23,11 @@
         th {
             background-color: #f2f2f2;
         }
+
+        img.img-fluid {
+             width: 300px;
+             margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -80,9 +85,8 @@ if(isset($_GET["product_id"])) {
         echo "<h1>{$row["name"]}</h1>";
         echo "<table>";
         echo "<tr><th>Attribute</th><th>Value</th></tr>";
+        echo "<div = foto><tr><td><img src='" . $row["foto"] . "' alt='Person foto' class='img-fluid'><td>" . $row["info"] . "</td></tr></div>";
         echo "<tr><td>Prijs</td><td>" . $row["prijs"] . "</td></tr>";
-        echo "<tr><td>Informatie</td><td>" . $row["info"] . "</td></tr>";
-        echo "<tr><td>Foto</td><td>" . $row["foto"] . "</td></tr>";
         echo "</table>";
     } else {
         echo "<p>No records found.</p>";

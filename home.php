@@ -97,7 +97,6 @@ session_start();
                         </div>
                     </div>
                 </div>
-                <!-- Voeg meer productkaarten toe indien nodig -->
             </div>
         </div>
     </section>
