@@ -12,12 +12,6 @@ if (isset($_POST['delete'])) {
     $query = "DELETE FROM `producten` WHERE `product_id` = :product_id";
     $pdoresult = $conn->prepare($query);
     $pdoExec = $pdoresult->execute(array(":product_id" => $product_id));
-
-    if ($pdoExec) {
-        echo "Data Deleted";
-    } else {
-        echo "ERROR";
-    }
 }
 
 ?>
