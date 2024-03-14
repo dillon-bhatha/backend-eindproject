@@ -1,19 +1,14 @@
-const hiddenElements = document.querySelectorAll(".card");
+const hiddenElement = document.querySelectorAll(".card");
 
-let index = 0;
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        console.log(entry);
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        } else {
+            entry.target.classList.remove("show");
+        }
+    });
+});
 
-let id1 = setInterval(() => {
-  console.log(window.scrollY);
-  if (window.scrollY > 900) {
-    clearInterval(id1);
-    const id = setInterval(() => {
-      console.log(hiddenElements[index]);
-      hiddenElements[index].classList.remove("none");
-      hiddenElements[index].classList.add("show");
-      index++;
-      if (index >= hiddenElements.length) {
-        clearInterval(id);
-      }
-    }, 500);
-  }
-}, 50);
+hiddenElement.forEach((el) => observer.observe(el));

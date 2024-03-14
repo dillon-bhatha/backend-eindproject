@@ -71,12 +71,17 @@ require_once('db.database.php');
 
         .card {
             opacity: 0;
-            transition: all 1s;
+            transition: all 2s;
+            filter: blur(5px);
+            transform: translateX(100%);
         }
 
         .show {
             opacity: 1;
+            filter: blur(0);
+            transform: translateX(0);
         }
+
     </style>
 </head>
 
