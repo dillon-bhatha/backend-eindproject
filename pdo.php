@@ -6,6 +6,25 @@
     <title>WEBSHOP</title>
     <link rel="stylesheet" href="../pdo/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        div.card {
+            padding: 20px;
+        }
+
+        .info {
+            opacity: 0;
+            transition: all 2s;
+            filter: blur(5px);
+            transform: translateX(-100%);
+        }
+
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(0);
+        }
+
+    </style>
 </head>
 <body>
 <header>
@@ -61,8 +80,7 @@
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='col-md-4'>";
-                echo "<div class='
-                info'>";
+                echo "<div class='info none'>";
                 echo "<div class= 'titel'><h3><strong>{$row['name']}</strong></h3></div>";
                 if (!empty($row["foto"])) {
                     echo "<a href='" . $row["foto"] . "' target='_blank'>";
@@ -155,6 +173,23 @@
             console.log('Product added to cart with ID: ' + productId);
         }
     });
+    
+</script>
+<script>
+const hiddenElement = document.querySelectorAll(".info");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        console.log(entry);
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        } else {
+            entry.target.classList.remove("show");
+        }
+    });
+});
+
+hiddenElement.forEach((el) => observer.observe(el));
 </script>
 </body>
 </html>
