@@ -15,13 +15,35 @@ require_once('db.database.php');
         .hero {
             opacity: 0;
             transform: translateX(-100%);
-            animation: slide-in 2s forwards, fade-in 2s forwards;
+            animation: slide-in-hero 2s forwards, fade-in 2s forwards;
         }
 
-        @keyframes slide-in {
+        .about-us {
+            opacity: 0;
+            animation: fade-in 3s forwards;
+        }
+
+        .product-info {
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slide-in-product 2s forwards, fade-in 2s forwards;
+        }
+
+        @keyframes slide-in-hero {
             from {
                 transform: translateX(-100%);
             }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-in-product {
+            from {
+                transform: translateX(100%);
+            }
+
             to {
                 transform: translateX(0);
             }
@@ -30,9 +52,12 @@ require_once('db.database.php');
         @keyframes fade-in {
             from {
                 opacity: 0;
+                filter: blur(20px);
             }
+
             to {
                 opacity: 1;
+                filter: blur(0);
             }
         }
 
@@ -42,6 +67,15 @@ require_once('db.database.php');
 
         div.card {
             padding: 20px;
+        }
+
+        .card {
+            opacity: 0;
+            transition: all 1s;
+        }
+
+        .show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -124,7 +158,7 @@ require_once('db.database.php');
 
                 while ($row = $stmt->fetch()) {
                     echo '<div class="col-md-4 mb-2">';
-                    echo '<div class="card">';
+                    echo '<div class="card none">';
                     echo '<img src="' . $row['foto'] . '" class="card-img-top" alt="' . $row['name'] . '">';
                     echo '<div class="card-body">';
                     echo '<h5 class="card-title">' . $row['name'] . '</h5>';
@@ -138,6 +172,7 @@ require_once('db.database.php');
             </div>
         </div>
     </section>
+
 
     <footer class="bg-light">
         <div class="container p-4">
@@ -191,5 +226,6 @@ require_once('db.database.php');
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script src="app.js"></script>
 
 </html>
