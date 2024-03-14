@@ -9,7 +9,7 @@
   margin-bottom: 20px;
 }
 
-.person-info {
+.info {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -19,12 +19,12 @@
   border-radius: 10px;
 }
 
-.person-info img {
+.info img {
   max-width: 100%;
   height: 300px;
 }
 
-.person-details {
+.details {
   display: flex;
   flex-direction: column;
   flex-grow: 1;

@@ -61,16 +61,17 @@
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div class='col-md-4'>";
-                echo "<div class='person-info'>";
+                echo "<div class='
+                info'>";
                 echo "<div class= 'titel'><h3><strong>{$row['name']}</strong></h3></div>";
                 if (!empty($row["foto"])) {
                     echo "<a href='" . $row["foto"] . "' target='_blank'>";
-                    echo "<img src='" . $row["foto"] . "' alt='Person foto' class='img-fluid'>";
+                    echo "<img src='" . $row["foto"] . "' alt='foto' class='img-fluid'>";
                     echo "</a>";
                 } else {
                     echo "No foto available";
                 }
-                echo "<div class='person-details'>";
+                echo "<div class='details'>";
                 echo "<h2 class='prijzen'>$<strong>{$row['prijs']}</strong></h2>";
                 echo "<div class= 'informatie'>{$row['info']}</div>";
                 echo "</div>";
