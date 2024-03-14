@@ -12,9 +12,34 @@ require_once('db.database.php');
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
+        .hero {
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slide-in 2s forwards, fade-in 2s forwards;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         div.card-body {
             padding: 10px;
         }
+
         div.card {
             padding: 20px;
         }
@@ -29,7 +54,7 @@ require_once('db.database.php');
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarNav"> <!-- Changed justify-content -->
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="home.php">Home</a>
@@ -63,7 +88,7 @@ require_once('db.database.php');
         </nav>
     </header>
 
-    <section class="hero bg-dark text-white py-5">
+    <section class="hero bg-dark text-white py-5" style="opacity: 0; transition: opacity 0.5s ease-out;">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -114,7 +139,6 @@ require_once('db.database.php');
         </div>
     </section>
 
-
     <footer class="bg-light">
         <div class="container p-4">
             <div class="row">
@@ -163,6 +187,8 @@ require_once('db.database.php');
             <a class="text-dark" href="#">WEBSHOP</a>
         </div>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
