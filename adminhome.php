@@ -4,6 +4,78 @@ if (!isset($_SESSION["username"])) {
     header("location:home.php");
 }
 ?>
+    <style>
+        .hero {
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slide-in-hero 2s forwards, fade-in 2s forwards;
+        }
+
+        .about-us {
+            opacity: 0;
+            animation: fade-in 3s forwards;
+        }
+
+        .product-info {
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slide-in-product 2s forwards, fade-in 2s forwards;
+        }
+
+        @keyframes slide-in-hero {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-in-product {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                filter: blur(20px);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        div.card-body {
+            padding: 10px;
+        }
+
+        div.card {
+            padding: 20px;
+        }
+
+        .card {
+            opacity: 0;
+            transition: all 2s;
+            filter: blur(5px);
+            transform: translateX(100%);
+        }
+
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateX(0);
+        }
+
+    </style>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,31 +158,32 @@ if (!isset($_SESSION["username"])) {
         <div class="container">
             <h2 class="text-center mb-5">Featured Products</h2>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="product1.jpg" class="card-img-top" alt="Product 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Description of the product. Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit.</p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="product2.jpg" class="card-img-top" alt="Product 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Description of the product. Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit.</p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                require_once('db.database.php');
+                $pdoconnect = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+                $pdoconnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $query = "SELECT `name`, `info`, `foto`, `product_id` FROM `producten`";
+                $stmt = $pdoconnect->query($query);
+
+                while ($row = $stmt->fetch()) {
+                    echo '<div class="col-md-4 mb-2">';
+                    echo '<div class="card none">';
+                    echo '<img src="' . $row['foto'] . '" class="card-img-top" alt="' . $row['name'] . '">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">' . $row['name'] . '</h5>';
+                    echo '<p class="card-text">' . $row['info'] . '</p>';
+                    echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-3 detail-btn'>Details</a>";
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                ?>
             </div>
         </div>
     </section>
+
+    
 
     <footer class="bg-light">
         <div class="container p-4">
@@ -164,5 +237,20 @@ if (!isset($_SESSION["username"])) {
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+const hiddenElement = document.querySelectorAll(".card");
 
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        console.log(entry);
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        } else {
+            entry.target.classList.remove("show");
+        }
+    });
+});
+
+hiddenElement.forEach((el) => observer.observe(el));
+</script>
 </html>

@@ -6,23 +6,28 @@ if (!isset($_SESSION["username"])) {
 }
 
 
-if (isset($_POST['add_cart'])) {
+if(isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
     $product_id = $_POST['product_id'];
 
-    $query = "SELECT * FROM producten    WHERE product_id = ?";
-    $stmt = $conn->prepare($query);
+    // Check if product exists
+    $stmt = $conn->prepare("SELECT * FROM producten WHERE product_id = ?");
     $stmt->execute([$product_id]);
     $product = $stmt->fetch();
 
-    if ($product) {
-        if (isset($_SESSION['cart'][$product_id])) {
-            $_SESSION['cart'][$product_id] += 1; // Increment the quantity if already exists
+    if($product) {
+        // Add product to cart session
+        if(isset($_SESSION['cart'][$product_id])) {
+            $_SESSION['cart'][$product_id] += 1; // Increment quantity if already in cart
         } else {
-            $_SESSION['cart'][$product_id] = 1; // Set quantity to 1 if doesn't exist
+            $_SESSION['cart'][$product_id] = 1; // Add to cart with quantity 1
         }
     }
-    
 }
+
+// Fetch products from database
+$query = "SELECT * FROM producten";
+$stmt = $conn->query($query);
+$products = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +65,6 @@ if (isset($_POST['add_cart'])) {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <!-- Changed justify-content -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="user.php">Home</a>
@@ -69,7 +73,7 @@ if (isset($_POST['add_cart'])) {
                             <a class="nav-link" href="userproducten.php">Producten</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="usercontact.phpP">Contact</a>
+                            <a class="nav-link" href="usercontact.php">Contact</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
@@ -115,7 +119,10 @@ if (isset($_POST['add_cart'])) {
                     echo "<div class= 'informatie'>{$row['info']}</div>";
                     echo "</div>";
                     echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-2 detail-btn'>Details</a>";
-                    echo "<button class='btn btn-primary mt-2 add-to-cart' data-product-id='{$row['product_id']}'>Add to Cart</button>";
+                    echo '<form method="post">';
+                    echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
+                    echo '<button type="submit" name="add_to_cart" class="btn btn-primary mt-2">Add to Cart</button>';
+                    echo '</form>';
                     echo "</div>";
                     echo "</div>";
                 }

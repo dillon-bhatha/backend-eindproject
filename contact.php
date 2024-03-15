@@ -22,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ));
 
     if ($pdoExec) {
-        echo "Data Inserted";
+        echo "<div class='alert alert-success'>Message Sent Succesfully</div>";
     } else {
-        echo "ERROR";
+        echo "<div class='alert alert-danger'>ERROR</div>";
     }
 }
 
