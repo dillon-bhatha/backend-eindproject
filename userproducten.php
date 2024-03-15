@@ -9,22 +9,19 @@ if (!isset($_SESSION["username"])) {
 if(isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
     $product_id = $_POST['product_id'];
 
-    // Check if product exists
     $stmt = $conn->prepare("SELECT * FROM producten WHERE product_id = ?");
     $stmt->execute([$product_id]);
     $product = $stmt->fetch();
 
     if($product) {
-        // Add product to cart session
         if(isset($_SESSION['cart'][$product_id])) {
-            $_SESSION['cart'][$product_id] += 1; // Increment quantity if already in cart
+            $_SESSION['cart'][$product_id] += 1;
         } else {
-            $_SESSION['cart'][$product_id] = 1; // Add to cart with quantity 1
+            $_SESSION['cart'][$product_id] = 1;
         }
     }
 }
 
-// Fetch products from database
 $query = "SELECT * FROM producten";
 $stmt = $conn->query($query);
 $products = $stmt->fetchAll();
@@ -40,6 +37,20 @@ $products = $stmt->fetchAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../pdo/styles.css">
     <style>
+        #detailsa {
+            width: 295px;
+            background-color: blue;
+            border-radius: 5px;
+            height: 40px;
+            color: white;
+            box-shadow: #4f4f4f;
+            margin-top: 7px;
+            border-style: none;
+        }
+
+        #detailsa:hover {
+            filter: brightness(85%);
+        }
 
         .info {
             opacity: 0;
@@ -121,7 +132,7 @@ $products = $stmt->fetchAll();
                     echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-2 detail-btn'>Details</a>";
                     echo '<form method="post">';
                     echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
-                    echo '<button type="submit" name="add_to_cart" class="btn btn-primary mt-2">Add to Cart</button>';
+                    echo '<button type="submit" name="add_to_cart" id = "detailsa" class="btn btn-primary mt-2">Add to Cart</button>';
                     echo '</form>';
                     echo "</div>";
                     echo "</div>";

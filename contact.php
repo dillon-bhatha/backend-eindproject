@@ -82,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </nav>
     </header>
-    <!-- Contact Form Section -->
     <section id="contact" class="py-5">
         <div class="container">
             <div class="row">
@@ -114,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-light">
         <div class="container p-4">
             <div class="row">
@@ -163,7 +161,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a class="text-dark" href="#">WEBSHOP</a>
         </div>
     </footer>
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

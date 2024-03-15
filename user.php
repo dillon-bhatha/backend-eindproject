@@ -96,7 +96,6 @@ if (!isset($_SESSION["username"])) {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <!-- Changed justify-content -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="user.php">Home</a>

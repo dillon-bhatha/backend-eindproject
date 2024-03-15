@@ -15,9 +15,6 @@ $totalPrice = 0;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <!-- Your header content -->
-    </header>
     <h1>Shopping Cart</h1>
     <div class="cart-items">
         <?php if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
@@ -34,12 +31,10 @@ $totalPrice = 0;
                 <tbody>
                     <?php foreach($_SESSION['cart'] as $product_id => $quantity): ?>
                         <?php
-                        // Fetch product details from database
                         $stmt = $conn->prepare("SELECT * FROM producten WHERE product_id = ?");
                         $stmt->execute([$product_id]);
                         $product = $stmt->fetch();
 
-                        // Calculate total price for the product
                         $productTotal = $product['prijs'] * $quantity;
                         $totalPrice += $productTotal;
                         ?>
@@ -59,9 +54,7 @@ $totalPrice = 0;
         <?php endif; ?>
     </div>
     <a href="userproducten.php">Back to Products</a>
-    <footer class="bg-light">
-        <!-- Your footer content -->
-    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 </body>
