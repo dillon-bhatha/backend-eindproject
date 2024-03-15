@@ -114,8 +114,8 @@ if (isset($_POST['add_cart'])) {
                     echo "<h2 class='prijzen'>$<strong>{$row['prijs']}</strong></h2>";
                     echo "<div class= 'informatie'>{$row['info']}</div>";
                     echo "</div>";
-                    echo "<a href='cart.php?product_id={$row['product_id']}' class='btn btn-success mt-2 detail-btn'>Details</a>";
-                    echo "<button type='submit' name='add_cart' class='btn btn-primary mt-2 add_cart' data-product-id='{$row['product_id']}'>Add to Cart</button>";
+                    echo "<a href='detail.php?product_id={$row['product_id']}' class='btn btn-success mt-2 detail-btn'>Details</a>";
+                    echo "<button class='btn btn-primary mt-2 add-to-cart' data-product-id='{$row['product_id']}'>Add to Cart</button>";
                     echo "</div>";
                     echo "</div>";
                 }
